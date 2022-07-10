@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+  
+<mapper namespace="com.care.root.mybatis.MemberMapper">
+	<resultMap type="com.care.root.member.dto.MemberDTO" 
+											id="member">
+		<id property="id" column="id" />
+		<result property="pw" column="pw"/>
+		<result property="addr" column="addr"/>
+		<result property="sessionId" column="session_id"/>
+	</resultMap>
+	
+	<select id="user_check" resultMap="member">
+		select * from membership where id = #{id}
+	</select>
+
+	<select id="memberInfo" resultMap="member">
+		select * from membership
+	</select>
+	<insert id="register">
+		insert into membership(id, pw, addr) 
+						values(#{id},#{pw},#{addr})
+	</insert>
+	<delete id="delete">
+		delete from membership where id=#{id}
+	</delete>
+	
+	<update id="modify">
+	update membership set pw=#{pw}, addr=#{addr}
+										where id=#{id}
+	</update>
+	
+	<update id="keepLogin">
+	update membership set session_id=#{sessionId}
+										where id=#{id}
+	</update>
+	
+	<select id="getSessionId" resultMap="member">
+		select * from membership where session_id=#{sessionId} 
+	</select>
+	
+	<select id="idChk" resultType="Integer">
+select count(*) from membership where id=#{id}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
